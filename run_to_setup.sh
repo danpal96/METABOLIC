@@ -1,3 +1,6 @@
+#/usr/bin/env bash
+set -euo pipefail
+
 echo "preparing METABOLIC files..."
 tar zxvf Accessory_scripts.tgz; rm Accessory_scripts.tgz
 tar zxvf METABOLIC_hmm_db.tgz;  rm METABOLIC_hmm_db.tgz
@@ -7,9 +10,9 @@ tar zxvf Motif.tgz; rm Motif.tgz
 echo "preparing kofam files..."
 mkdir kofam_database
 cd kofam_database
-curl --silent ftp://ftp.genome.jp/pub/db/kofam/ko_list.gz  -O ko_list.gz
-curl --silent ftp://ftp.genome.jp/pub/db/kofam/profiles.tar.gz  -O profiles.tar.gz
-gzip --quiet -d ko_list.gz  
+curl -O ftp://ftp.genome.jp/pub/db/kofam/ko_list.gz
+curl -O ftp://ftp.genome.jp/pub/db/kofam/profiles.tar.gz
+gzip -d ko_list.gz
 tar xzf profiles.tar.gz; rm profiles.tar.gz
 mv ../All_Module_KO_ids.txt profiles
 cd profiles  
@@ -21,7 +24,7 @@ cd ../
 echo "preparing dbCAN2 files..."
 mkdir dbCAN2
 cd dbCAN2
-wget https://bcb.unl.edu/dbCAN2/download/Databases/dbCAN-old@UGA/dbCAN-fam-HMMs.txt.v10  -O dbCAN-fam-HMMs.txt
+wget https://bcb.unl.edu/dbCAN2/download/Databases/dbCAN-old@UGA/dbCAN-fam-HMMs.txt.v10 -O dbCAN-fam-HMMs.txt
 perl ../Accessory_scripts/batch_hmmpress_for_dbCAN2_HMMdb.pl
 cd ../
 
